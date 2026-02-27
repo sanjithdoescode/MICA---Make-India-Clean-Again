@@ -111,7 +111,7 @@ export default function App() {
                   transition={pageTransition}
                 >
                   <ReportSomeone />
-                  <BottomNav activeView={activeView} onNavigate={(v) => { setActiveView(v); setShowReport(false); }} />
+                  <BottomNav activeView={activeView} onNavigate={(v) => { setActiveView(v); setShowReport(false); }} onHome={() => { setShowHomePage(true); setShowReport(false); }} />
                 </motion.div>
               ) : (
                 <motion.div
@@ -123,7 +123,7 @@ export default function App() {
                   transition={pageTransition}
                 >
                   <ActiveCitizenView />
-                  <BottomNav activeView={activeView} onNavigate={setActiveView} />
+                  <BottomNav activeView={activeView} onNavigate={setActiveView} onHome={() => setShowHomePage(true)} />
                 </motion.div>
               )}
             </AnimatePresence>

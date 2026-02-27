@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Camera, MapPin, Trophy, User } from 'lucide-react';
+import { Camera, MapPin, Trophy, User, House } from 'lucide-react';
 
 type ViewId = 'report' | 'disposal' | 'missions' | 'profile';
 
@@ -19,12 +19,25 @@ const navItems: NavItem[] = [
 interface BottomNavProps {
   activeView: ViewId;
   onNavigate: (view: ViewId) => void;
+  onHome: () => void;
 }
 
-export function BottomNav({ activeView, onNavigate }: BottomNavProps) {
+export function BottomNav({ activeView, onNavigate, onHome }: BottomNavProps) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-t border-civic-slate-mid">
       <div className="flex items-center justify-around px-2 pb-safe">
+
+        {/* Home — navigates back to the MICA landing page */}
+        <button
+          onClick={onHome}
+          className="flex flex-col items-center gap-1 px-4 py-3 relative"
+        >
+          <House size={22} className="text-civic-slate-dark" strokeWidth={1.8} />
+          <span className="text-[10px] font-sans font-semibold tracking-wide uppercase text-civic-slate-dark">
+            MICA
+          </span>
+        </button>
+
         {navItems.map(({ id, label, icon: Icon }) => {
           const isActive = activeView === id;
           return (
