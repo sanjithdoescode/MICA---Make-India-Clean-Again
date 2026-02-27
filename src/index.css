@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-civic-slate font-sans text-civic-navy;
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+
+  ::selection {
+    @apply bg-civic-green text-white;
+  }
+
+  * {
+    @apply scroll-smooth;
+  }
+}
+
+@layer components {
+  .serif-display {
+    @apply font-serif font-bold tracking-tight;
+  }
+
+  .civic-card {
+    @apply bg-white rounded-2xl border border-civic-slate-mid shadow-sm;
+  }
+
+  .civic-btn-primary {
+    @apply bg-civic-green text-white font-sans font-semibold rounded-xl px-6 py-3
+           transition-all duration-200 active:scale-95 hover:bg-opacity-90;
+  }
+
+  .civic-btn-ghost {
+    @apply border border-civic-navy text-civic-navy font-sans font-medium rounded-xl px-6 py-3
+           transition-all duration-200 active:scale-95 hover:bg-civic-navy hover:text-white;
+  }
+
+  .waste-tag {
+    @apply text-xs font-sans font-semibold px-2.5 py-1 rounded-full uppercase tracking-wide;
+  }
+
+  .evidence-bar {
+    @apply h-1.5 rounded-full transition-all duration-700;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .italic-serif {
+    @apply font-serif italic;
+  }
+}
