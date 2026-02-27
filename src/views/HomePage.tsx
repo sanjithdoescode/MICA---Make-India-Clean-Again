@@ -4,8 +4,6 @@ import {
   Camera, Trophy, MapPin, BarChart2, ShieldCheck,
   CheckCircle2, ChevronDown, Navigation, ArrowRight,
 } from 'lucide-react';
-import { PointsTicker } from '../components/PointsTicker';
-
 interface HomePageProps {
   onEnter: () => void;
 }
@@ -19,17 +17,6 @@ const staggerSection = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
-
-const indiaCityPins = [
-  { cityName: 'Delhi',      x: 215, y: 105, isPilot: false, animDelay: 0.2 },
-  { cityName: 'Mumbai',     x: 128, y: 268, isPilot: false, animDelay: 0.5 },
-  { cityName: 'Kolkata',    x: 355, y: 215, isPilot: false, animDelay: 0.8 },
-  { cityName: 'Hyderabad',  x: 245, y: 305, isPilot: false, animDelay: 1.0 },
-  { cityName: 'Bengaluru',  x: 230, y: 368, isPilot: false, animDelay: 1.2 },
-  { cityName: 'Chennai',    x: 285, y: 382, isPilot: false, animDelay: 1.4 },
-  { cityName: 'Ahmedabad',  x: 130, y: 188, isPilot: false, animDelay: 1.6 },
-  { cityName: 'Madurai',    x: 265, y: 425, isPilot: true,  animDelay: 1.9 },
-];
 
 const corePillars = [
   {
@@ -141,11 +128,11 @@ const aiPipeline = [
   { aiInput: 'All Reports',     aiProcessor: 'Density ML',                aiOutput: 'Ward Heatmap Prediction' },
 ];
 
-const pilotCounters = [
-  { counterLabel: 'Reports filed today',   counterTarget: 1247, counterSuffix: '' },
-  { counterLabel: 'Waste redirected (kg)', counterTarget: 8300, counterSuffix: '' },
-  { counterLabel: 'Active wards',          counterTarget: 42,   counterSuffix: ' / 100' },
-  { counterLabel: 'Kirana drop-points',    counterTarget: 200,  counterSuffix: '' },
+const pilotProjections = [
+  { projectionFigure: '50,000+', projectionLabel: 'citizens engaged through missions & gamified reporting in year 1' },
+  { projectionFigure: '~200T',   projectionLabel: 'waste redirected through kirana stores & RVM drop-points' },
+  { projectionFigure: '100',     projectionLabel: 'wards with live SLA-tracked municipal ticket resolution' },
+  { projectionFigure: '200+',    projectionLabel: 'kirana stores onboarded as zero-cost drop-point infrastructure' },
 ];
 
 export default function HomePage({ onEnter }: HomePageProps) {
@@ -159,69 +146,24 @@ export default function HomePage({ onEnter }: HomePageProps) {
     <div className="bg-white overflow-x-hidden">
 
       {/* ── Section 1: Hero ─────────────────────────────────── */}
-      <section className="relative min-h-screen bg-civic-navy flex flex-col justify-center overflow-hidden">
+      <section className="relative min-h-screen bg-white flex flex-col justify-center overflow-hidden">
 
-        {/* India outline — decorative background layer */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-[0.06] pointer-events-none select-none">
+        {/* India outline — subtle decorative background */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-[0.05] pointer-events-none select-none">
           <svg viewBox="0 0 500 600" className="h-[90vh] max-h-[700px]" fill="none">
             <path
               d="M278,28 L302,22 L330,26 L358,38 L378,55 L395,78 L408,104 L418,132 L423,162 L422,192 L413,218 L398,240 L382,258 L395,272 L408,290 L415,310 L408,330 L390,345 L370,360 L348,378 L325,400 L302,422 L280,445 L268,462 L258,445 L240,422 L215,398 L190,372 L165,345 L142,318 L122,288 L105,258 L92,228 L82,196 L78,162 L80,128 L90,96 L108,68 L132,46 L162,32 L195,24 L232,22 Z"
-              stroke="#22c55e"
+              stroke="#1a6b3c"
               strokeWidth="1.5"
-              fill="#22c55e"
-              fillOpacity="0.2"
+              fill="#1a6b3c"
+              fillOpacity="0.15"
             />
           </svg>
         </div>
 
-        {/* City pins on India map */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
-          <svg viewBox="0 0 500 600" className="h-[90vh] max-h-[700px]">
-            {indiaCityPins.map(({ cityName, x, y, isPilot, animDelay }) => (
-              <motion.g
-                key={cityName}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: animDelay, duration: 0.35, ease: 'easeOut' }}
-              >
-                <motion.circle
-                  cx={x} cy={y}
-                  r={isPilot ? 7 : 4}
-                  fill={isPilot ? '#d97706' : '#22c55e'}
-                  animate={{
-                    r: isPilot ? [7, 12, 7] : [4, 7, 4],
-                    opacity: [0.9, 0.35, 0.9],
-                  }}
-                  transition={{ duration: 2.8, repeat: Infinity, delay: animDelay * 0.4 }}
-                />
-                {isPilot && (
-                  <motion.text
-                    x={x + 11} y={y + 4}
-                    fontSize="11"
-                    fill="#d97706"
-                    fontFamily="DM Sans, sans-serif"
-                    fontWeight="700"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: animDelay + 0.5 }}
-                  >
-                    Madurai ★
-                  </motion.text>
-                )}
-              </motion.g>
-            ))}
-          </svg>
-        </div>
-
-        {/* Radial green glow */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(26,107,60,0.18) 0%, transparent 70%)' }}
-        />
-
         {/* GDG badge */}
         <div className="absolute top-6 right-6 z-10">
-          <span className="font-sans text-xs font-semibold text-civic-amber tracking-widest uppercase">
+          <span className="font-sans text-xs font-semibold text-civic-green tracking-widest uppercase">
             Built for GDG Madurai · 2025
           </span>
         </div>
@@ -241,14 +183,14 @@ export default function HomePage({ onEnter }: HomePageProps) {
 
           <motion.h1
             variants={fadeUpChild}
-            className="text-display-xl font-serif text-white text-balance mb-6"
+            className="text-display-xl font-serif text-civic-navy text-balance mb-6"
           >
             Make India<br className="hidden sm:block" /> Clean Again
           </motion.h1>
 
           <motion.p
             variants={fadeUpChild}
-            className="font-sans text-lg text-white/65 max-w-2xl mx-auto mb-10 leading-relaxed text-balance"
+            className="font-sans text-lg text-civic-navy/60 max-w-2xl mx-auto mb-10 leading-relaxed text-balance"
           >
             Proof-based waste reporting. Gamified civic action. Real municipal accountability —
             starting in Madurai, scaling to every Indian city.
@@ -266,7 +208,7 @@ export default function HomePage({ onEnter }: HomePageProps) {
             </button>
             <button
               onClick={scrollToContent}
-              className="flex items-center gap-2 font-sans font-medium text-white/60 hover:text-white transition-colors px-4 py-3.5"
+              className="flex items-center gap-2 font-sans font-medium text-civic-navy/45 hover:text-civic-navy transition-colors px-4 py-3.5"
             >
               See How It Works <ChevronDown size={18} />
             </button>
@@ -278,10 +220,10 @@ export default function HomePage({ onEnter }: HomePageProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.4, duration: 0.4 }}
-          className="absolute bottom-8 left-6 z-10 flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2.5 border border-white/20"
+          className="absolute bottom-8 left-6 z-10 flex items-center gap-2 bg-civic-green-muted rounded-xl px-4 py-2.5 border border-civic-green/20"
         >
-          <Navigation size={13} className="text-civic-amber" />
-          <span className="font-sans text-sm text-white/75 font-medium">Pilot: Madurai, Tamil Nadu</span>
+          <Navigation size={13} className="text-civic-green" />
+          <span className="font-sans text-sm text-civic-green font-semibold">Pilot: Madurai, Tamil Nadu</span>
         </motion.div>
 
         {/* Tagline */}
@@ -289,7 +231,7 @@ export default function HomePage({ onEnter }: HomePageProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.7 }}
-          className="absolute bottom-9 right-6 z-10 font-serif italic text-white/35 text-sm"
+          className="absolute bottom-9 right-6 z-10 font-serif italic text-civic-navy/30 text-sm"
         >
           Starting in Madurai. Built for India.
         </motion.p>
@@ -388,7 +330,7 @@ export default function HomePage({ onEnter }: HomePageProps) {
       </section>
 
       {/* ── Section 4: Five User Journeys ───────────────────── */}
-      <section className="bg-civic-navy py-24 px-6">
+      <section className="bg-civic-green py-24 px-6">
         <motion.div
           variants={staggerSection}
           initial="hidden"
@@ -396,7 +338,7 @@ export default function HomePage({ onEnter }: HomePageProps) {
           viewport={{ once: true, margin: '-80px' }}
           className="max-w-4xl mx-auto"
         >
-          <motion.p variants={fadeUpChild} className="font-sans text-xs font-bold tracking-widest uppercase text-civic-amber mb-3">
+          <motion.p variants={fadeUpChild} className="font-sans text-xs font-bold tracking-widest uppercase text-white/55 mb-3">
             The Five Flows
           </motion.p>
           <motion.h2 variants={fadeUpChild} className="text-display-md font-serif text-white mb-14 text-balance">
@@ -404,18 +346,18 @@ export default function HomePage({ onEnter }: HomePageProps) {
           </motion.h2>
 
           <div className="relative">
-            <div className="absolute left-7 top-8 bottom-8 w-px bg-white/10 hidden sm:block" />
+            <div className="absolute left-7 top-8 bottom-8 w-px bg-white/20 hidden sm:block" />
 
             <motion.div variants={staggerSection} className="space-y-10">
               {userJourneys.map(({ journeyStep, journeyTitle, journeyDesc, innovationTag }) => (
                 <motion.div key={journeyStep} variants={fadeUpChild} className="flex gap-6 items-start">
-                  <div className="relative z-10 flex-shrink-0 w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center">
-                    <span className="font-mono text-sm font-bold text-white/55">{journeyStep}</span>
+                  <div className="relative z-10 flex-shrink-0 w-14 h-14 rounded-2xl bg-white/15 border border-white/25 flex items-center justify-center">
+                    <span className="font-mono text-sm font-bold text-white/70">{journeyStep}</span>
                   </div>
                   <div className="pt-1.5 min-w-0">
                     <h3 className="font-sans font-semibold text-white text-lg mb-2">{journeyTitle}</h3>
-                    <p className="font-sans text-sm text-white/55 leading-relaxed mb-3">{journeyDesc}</p>
-                    <span className="inline-block font-mono text-xs bg-civic-green/20 text-civic-green-light px-3 py-1.5 rounded-lg border border-civic-green/30">
+                    <p className="font-sans text-sm text-white/65 leading-relaxed mb-3">{journeyDesc}</p>
+                    <span className="inline-block font-mono text-xs bg-white/15 text-white px-3 py-1.5 rounded-lg border border-white/25">
                       {innovationTag}
                     </span>
                   </div>
@@ -575,7 +517,7 @@ export default function HomePage({ onEnter }: HomePageProps) {
                   {aiProcessor}
                 </div>
                 <ArrowRight size={15} className="text-civic-slate-dark flex-shrink-0 hidden sm:block mx-1" />
-                <div className="flex-shrink-0 bg-civic-navy rounded-xl px-4 py-3 font-mono text-xs font-semibold text-white w-full sm:w-44 text-center">
+                <div className="flex-shrink-0 bg-civic-green rounded-xl px-4 py-3 font-mono text-xs font-semibold text-white w-full sm:w-44 text-center">
                   {aiOutput}
                 </div>
               </motion.div>
@@ -594,27 +536,27 @@ export default function HomePage({ onEnter }: HomePageProps) {
           className="max-w-5xl mx-auto"
         >
           <motion.p variants={fadeUpChild} className="font-sans text-xs font-bold tracking-widest uppercase text-civic-amber mb-3">
-            The Numbers That Matter
+            What the Madurai Pilot Unlocks
           </motion.p>
-          <motion.h2 variants={fadeUpChild} className="text-display-md font-serif text-civic-navy mb-12 text-balance">
-            Madurai pilot — live today
+          <motion.h2 variants={fadeUpChild} className="text-display-md font-serif text-civic-navy mb-4 text-balance">
+            Year-one targets for the pilot
           </motion.h2>
+          <motion.p variants={fadeUpChild} className="font-sans text-sm text-civic-navy/55 mb-12 max-w-2xl">
+            Projected outcomes based on Madurai's 100 wards, 3 lakh citizens, and existing kirana + RVM infrastructure.
+          </motion.p>
 
           <motion.div variants={staggerSection} className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-            {pilotCounters.map(({ counterLabel, counterTarget, counterSuffix }) => (
-              <motion.div key={counterLabel} variants={fadeUpChild} className="civic-card p-6 text-center">
-                <div className="flex items-baseline justify-center gap-0.5 font-serif font-bold text-3xl text-civic-green mb-1">
-                  <PointsTicker target={counterTarget} duration={2} />
-                  <span className="text-xl">{counterSuffix}</span>
-                </div>
-                <div className="font-sans text-xs text-civic-navy/55 leading-snug mt-1">{counterLabel}</div>
+            {pilotProjections.map(({ projectionFigure, projectionLabel }) => (
+              <motion.div key={projectionFigure} variants={fadeUpChild} className="civic-card p-6 text-center">
+                <div className="font-serif font-bold text-3xl text-civic-green mb-2">{projectionFigure}</div>
+                <div className="font-sans text-xs text-civic-navy/55 leading-snug">{projectionLabel}</div>
               </motion.div>
             ))}
           </motion.div>
 
           {/* National projection */}
-          <motion.div variants={fadeUpChild} className="bg-civic-navy rounded-2xl px-8 py-6 mb-10">
-            <p className="font-sans text-xs font-bold tracking-widest uppercase text-white/35 mb-4">
+          <motion.div variants={fadeUpChild} className="bg-civic-green rounded-2xl px-8 py-6 mb-10">
+            <p className="font-sans text-xs font-bold tracking-widest uppercase text-white/55 mb-4">
               At Scale Across India
             </p>
             <div className="flex flex-wrap gap-x-8 gap-y-3">
@@ -638,7 +580,7 @@ export default function HomePage({ onEnter }: HomePageProps) {
       </section>
 
       {/* ── Section 9: Enter App CTA ─────────────────────────── */}
-      <section className="bg-civic-navy py-28 px-6">
+      <section className="bg-civic-green py-28 px-6">
         <motion.div
           variants={staggerSection}
           initial="hidden"
@@ -649,22 +591,22 @@ export default function HomePage({ onEnter }: HomePageProps) {
           <motion.h2 variants={fadeUpChild} className="text-display-lg font-serif text-white mb-5 text-balance">
             Ready to make India cleaner?
           </motion.h2>
-          <motion.p variants={fadeUpChild} className="font-sans text-base text-white/55 mb-12 text-balance leading-relaxed">
+          <motion.p variants={fadeUpChild} className="font-sans text-base text-white/70 mb-12 text-balance leading-relaxed">
             Start in Madurai. See how it works. Imagine your city next.
           </motion.p>
 
           <motion.div variants={fadeUpChild}>
             <button
               onClick={onEnter}
-              className="civic-btn-primary text-lg px-10 py-4 inline-flex items-center gap-3"
+              className="bg-white text-civic-green font-sans font-semibold rounded-xl px-10 py-4 text-lg inline-flex items-center gap-3 transition-all duration-200 active:scale-95 hover:bg-white/90"
             >
               Enter MICA <ArrowRight size={20} />
             </button>
           </motion.div>
 
           <motion.div variants={fadeUpChild} className="mt-16 space-y-2">
-            <p className="font-serif italic text-2xl text-white/25">சுத்தமான இந்தியா</p>
-            <p className="font-sans text-xs text-white/25 tracking-widest uppercase">
+            <p className="font-serif italic text-2xl text-white/45">சுத்தமான இந்தியா</p>
+            <p className="font-sans text-xs text-white/45 tracking-widest uppercase">
               GDG Madurai 2025 · A platform for every Indian city
             </p>
           </motion.div>
